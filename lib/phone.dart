@@ -88,6 +88,7 @@ class _MyPhoneState extends State<MyPhone> {
                     ),
                     Expanded(
                         child: TextField(
+                      controller: phoneNumberController,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -114,7 +115,7 @@ class _MyPhoneState extends State<MyPhone> {
                               context: context,
                               builder: ((BuildContext context) {
                                 return AlertDialog(
-                                  content: Text('Retry please'),
+                                  content: Text('Retry please1 , $e'),
                                   actions: [
                                     GestureDetector(
                                         onTap: () {
@@ -126,14 +127,15 @@ class _MyPhoneState extends State<MyPhone> {
                               }));
                         },
                         phoneNumber:
-                            countryController.text.trim() + phoneNumberController.text.trim(),
+                            '${countryController.text.trim()}${phoneNumberController.text.trim()}',
                         verificationCompleted: (_) {},
                         verificationFailed: (e) {
                           showDialog(
                               context: context,
                               builder: ((BuildContext context) {
                                 return AlertDialog(
-                                  content: Text('Retry please'),
+                                  content:
+                                      Text('Retry2 please , $e', overflow: TextOverflow.visible),
                                   actions: [
                                     GestureDetector(
                                         onTap: () {
@@ -146,11 +148,15 @@ class _MyPhoneState extends State<MyPhone> {
                         },
                         codeSent: (String verificationId, int? token) {
                           Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => MyVerify()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyVerify(
+                                        verficationId: verificationId,
+                                      )));
                         },
                         // codeAutoRetrievalTimeout:codeAutoRetrievalTimeout
                       );
-                      Navigator.pushNamed(context, 'verify');
+                      // Navigator.pushNamed(context, 'verify');
                     },
                     child: Text("Send the code")),
               )
