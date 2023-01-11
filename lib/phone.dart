@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth_tut/verify.dart';
 import 'package:flutter/material.dart';
 
 class MyPhone extends StatefulWidget {
@@ -20,6 +22,9 @@ class _MyPhoneState extends State<MyPhone> {
 
   @override
   Widget build(BuildContext context) {
+    bool loading = false;
+    final phoneNumberController = TextEditingController();
+    final auth = FirebaseAuth.instance;
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(left: 25, right: 25),
@@ -101,9 +106,50 @@ class _MyPhoneState extends State<MyPhone> {
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green.shade600,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                     onPressed: () {
+                      auth.verifyPhoneNumber(
+                        codeAutoRetrievalTimeout: (e) {
+                          showDialog(
+                              context: context,
+                              builder: ((BuildContext context) {
+                                return AlertDialog(
+                                  content: Text('Retry please'),
+                                  actions: [
+                                    GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('ok'))
+                                  ],
+                                );
+                              }));
+                        },
+                        phoneNumber:
+                            countryController.text.trim() + phoneNumberController.text.trim(),
+                        verificationCompleted: (_) {},
+                        verificationFailed: (e) {
+                          showDialog(
+                              context: context,
+                              builder: ((BuildContext context) {
+                                return AlertDialog(
+                                  content: Text('Retry please'),
+                                  actions: [
+                                    GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('ok'))
+                                  ],
+                                );
+                              }));
+                        },
+                        codeSent: (String verificationId, int? token) {
+                          Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => MyVerify()));
+                        },
+                        // codeAutoRetrievalTimeout:codeAutoRetrievalTimeout
+                      );
                       Navigator.pushNamed(context, 'verify');
                     },
                     child: Text("Send the code")),
