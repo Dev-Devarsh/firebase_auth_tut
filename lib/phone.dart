@@ -111,20 +111,20 @@ class _MyPhoneState extends State<MyPhone> {
                     onPressed: () {
                       auth.verifyPhoneNumber(
                         codeAutoRetrievalTimeout: (e) {
-                          showDialog(
-                              context: context,
-                              builder: ((BuildContext context) {
-                                return AlertDialog(
-                                  content: Text('Retry please1 , $e'),
-                                  actions: [
-                                    GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('ok'))
-                                  ],
-                                );
-                              }));
+                          // showDialog(
+                          //     context: context,
+                          //     builder: ((BuildContext context) {
+                          //       return AlertDialog(
+                          //         content: Text('Retry please1 , $e'),
+                          //         actions: [
+                          //           GestureDetector(
+                          //               onTap: () {
+                          //                 Navigator.pop(context);
+                          //               },
+                          //               child: const Text('ok'))
+                          //         ],
+                          //       );
+                          //     }));
                         },
                         phoneNumber:
                             '${countryController.text.trim()}${phoneNumberController.text.trim()}',
