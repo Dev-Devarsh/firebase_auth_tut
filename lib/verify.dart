@@ -1,41 +1,22 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth_tut/success.dart';
 import 'package:flutter/material.dart';
-// import 'package:pinput/pinput.dart';
 
 class MyVerify extends StatefulWidget {
-  const MyVerify({Key? key}) : super(key: key);
+  final String? verficationId;
+  MyVerify({this.verficationId});
 
   @override
   State<MyVerify> createState() => _MyVerifyState();
 }
 
 class _MyVerifyState extends State<MyVerify> {
+  final submitPinController = TextEditingController();
+  final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
-    // final defaultPinTheme = PinTheme(
-    //   width: 56,
-    //   height: 56,
-    //   textStyle: TextStyle(
-    //       fontSize: 20,
-    //       color: Color.fromRGBO(30, 60, 87, 1),
-    //       fontWeight: FontWeight.w600),
-    //   decoration: BoxDecoration(
-    //     border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-    //     borderRadius: BorderRadius.circular(20),
-    //   ),
-    // );
-
-    // final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-    //   border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
-    //   borderRadius: BorderRadius.circular(8),
-    // );
-
-    // final submittedPinTheme = defaultPinTheme.copyWith(
-    //   decoration: defaultPinTheme.decoration?.copyWith(
-    //     color: Color.fromRGBO(234, 239, 243, 1),
-    //   ),
-    // );
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -84,22 +65,61 @@ class _MyVerifyState extends State<MyVerify> {
               SizedBox(
                 height: 30,
               ),
-             
-              SizedBox(
-                height: 20,
+              Container(
+                margin: EdgeInsets.all(8),
+                height: 55,
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Padding(
+                    padding: EdgeInsets.only(left: 8),
+                    child: TextField(
+                      controller: submitPinController,
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Phone",
+                      ),
+                    )),
               ),
               SizedBox(
                 width: double.infinity,
                 height: 45,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.green.shade600,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {},
+                        backgroundColor: Colors.green.shade600,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                    onPressed: () async {
+                      final cred = PhoneAuthProvider.credential(
+                          verificationId: widget.verficationId ?? '',
+                          smsCode: submitPinController.text.toString());
+                      try {
+                        await auth.signInWithCredential(cred).then((value) => Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => SuccessScreen())));
+                      } catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: ((BuildContext context) {
+                              return AlertDialog(
+                                content: Text('Retry please1 , $e'),
+                                actions: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('ok'))
+                                ],
+                              );
+                            }));
+                      }
+                    },
                     child: Text("Verify Phone Number")),
               ),
+              SizedBox(
+                height: 30,
+              ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
                       onPressed: () {
