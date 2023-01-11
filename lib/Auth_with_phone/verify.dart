@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth_tut/success.dart';
+import 'package:firebase_auth_tut/Auth_with_phone/success.dart';
 import 'package:flutter/material.dart';
 
 class MyVerify extends StatefulWidget {

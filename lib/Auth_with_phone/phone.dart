@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth_tut/verify.dart';
+import 'package:firebase_auth_tut/Auth_with_phone/verify.dart';
 import 'package:flutter/material.dart';
 
 class MyPhone extends StatefulWidget {

@@ -2,8 +2,8 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth_tut/phone.dart';
-import 'package:firebase_auth_tut/verify.dart';
+import 'package:firebase_auth_tut/Auth_with_phone/phone.dart';
+import 'package:firebase_auth_tut/Auth_with_phone/verify.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
