@@ -130,6 +130,15 @@ class _SubmitFormState extends State<SubmitForm> {
 
     // await docUser.set(json);
     await docUser.set(json2);
+
+    // if you remove [doc] method and use [add] method then firebase will generate id automatically
+    // final docUser = FirebaseFirestore.instance.collection('dev');
+    //insted of json you can make model class with to json method
+    // final json = {'name': name, 'age': age, 'birth': birth};
+    // final user = UserData(age: 21, birthdate: '23-3-2002', name: name);
+    // final json2 = user.toJson();
+
+    // await docUser.add(json2);
   }
 }
 
