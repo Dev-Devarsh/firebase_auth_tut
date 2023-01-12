@@ -106,7 +106,7 @@ class _SubmitFormState extends State<SubmitForm> {
                     return Column(
                       children: [
                         Text('age ${snapshoot.data!.map((e) => e.age)}'),
-                        Text('name ${snapshoot.data!.map((e) => e.name)}'),
+                        Text('name ${snapshoot.data!.map((e) => e.name ?? 'deleted field')}'),
                         Text('bithdate ${snapshoot.data!.map((e) => e.birthdate.toString())}'),
                       ],
                     );
@@ -168,7 +168,7 @@ deleteData() {
 
 class UserData {
   int age;
-  String name;
+  String? name;
   String birthdate;
   UserData({
     required this.age,
@@ -178,5 +178,5 @@ class UserData {
   toJson() => {'age': this.age, 'name': this.name, 'birthdate': this.birthdate};
 
   static UserData fromJson(Map<String, dynamic> json) =>
-      UserData(age: json['age'], name: json['name'], birthdate: json['birthdate']);
+      UserData(age: json['age'], name: json['name'] ?? null, birthdate: json['birthdate']);
 }
