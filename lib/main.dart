@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_auth_tut/cloud_fireStore/create_profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth_tut/Auth_with_phone/phone.dart';
@@ -8,7 +9,7 @@ import 'package:firebase_auth_tut/Auth_with_phone/verify.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(CreateProfile());
 }
 
 class MyApp extends StatelessWidget {
