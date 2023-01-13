@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:isolate';
 import 'dart:developer';
 
-
 Future createIsolate() async {
-
   /// Where I listen to the message from Mike's port
   ReceivePort myReceivePort = ReceivePort();
 
@@ -55,4 +53,3 @@ void heavyComputationTask(SendPort mySendPort) async {
     }
   }
 }
- 

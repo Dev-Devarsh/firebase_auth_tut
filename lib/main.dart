@@ -5,11 +5,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth_tut/Auth_with_phone/phone.dart';
 import 'package:firebase_auth_tut/Auth_with_phone/verify.dart';
+import 'Amination_tut/staggered_animation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(CreateProfile());
+  runApp(StaggeredAnimation());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +23,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: 'phone',
       debugShowCheckedModeBanner: false,
-      routes: {'phone': (context) => MyPhone(), 'verify': (context) => MyVerify()},
+      routes: {
+        'phone': (context) => MyPhone(),
+        'verify': (context) => MyVerify()
+      },
     );
   }
 }
