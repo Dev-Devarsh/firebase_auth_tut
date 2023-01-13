@@ -42,6 +42,7 @@ class _AnimatedWIdget1State extends State<AnimatedWIdget1>
       appBar: AppBar(title: const Text('Animated Switcher')),
       body: Center(
         child: AnimatedSwitcher(
+          // you can also coutomize transition by [transitionBuilder]
             duration: Duration(milliseconds: 800),
             child: flag
                 ? Container(
