@@ -15,8 +15,9 @@ class _StaggeredAnimationState extends State<StaggeredAnimation>
   void initState() {
     super.initState();
     _controller =
-        AnimationController(duration: Duration(seconds: 2), vsync: this);
-    _controller.forward();
+        AnimationController(duration: Duration(seconds: 2), vsync: this)
+          ..repeat(reverse: false);
+    // to repeat in reverse manner also set [reverse: true]
   }
 
   @override
