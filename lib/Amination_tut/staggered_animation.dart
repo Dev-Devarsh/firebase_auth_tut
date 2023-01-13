@@ -28,11 +28,8 @@ class _StaggeredAnimationState extends State<StaggeredAnimation>
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Animation tut',
-      home: HomePage(
+    return HomePage(
         controller: _controller,
-      ),
     );
   }
 }
