@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_auth_tut/animated_widget/animated_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'Amination_tut/staggered_animation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Staggered Animation',
-      home: StaggeredAnimation(),
+      home: AnimatedTutorial(),
     );
   }
 }
