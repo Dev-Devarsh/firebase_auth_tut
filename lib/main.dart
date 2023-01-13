@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Staggered Animation',
+      useInheritedMediaQuery: true,
+      title: 'Animation Switcher',
       home: AnimatedTutorial(),
     );
   }
