@@ -28,6 +28,15 @@ class _FlowWidgetTutState extends State<FlowWidgetTut>
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      // safe area is neccessory when phone have notches , punch hole camera etc...
+      // Basically it adds padding according to different screen size to avoid OS default constraines
+      body: SafeArea(
+          top: true,
+          bottom: true,
+          left: false,
+          right: false,
+          child: Flow()),
+    );
   }
 }
