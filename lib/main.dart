@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Staggered Animation',
-      home: StaggeredAnimation(),
+      title: 'Flow Widget Tut',
+      home: FlowWidgetTut(),
     );
   }
 }
