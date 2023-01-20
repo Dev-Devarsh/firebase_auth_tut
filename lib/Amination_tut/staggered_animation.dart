@@ -44,3 +44,35 @@ class _FlowWidgetTutState extends State<FlowWidgetTut>
     );
   }
 }
+
+class CustomFlowDelegate extends FlowDelegate {
+   Animation<double> controller;
+  CustomFlowDelegate({
+    required this.controller,
+  }) : super(repaint: controller);
+
+  @override
+  void paintChildren(FlowPaintingContext context) {
+    // context.paintChild(0, transform: Matrix4.translationValues(310, 750, 0));
+    // context.paintChild(1, transform: Matrix4.translationValues(310, 680, 0));
+    // context.paintChild(2, transform: Matrix4.translationValues(310, 610, 0));
+    final size = context.size;
+    final xStart = size.width - butonSize;
+    final yStart = size.height - butonSize;
+    for (var i = context.childCount - 1; i >= 0; i--) {
+      final childSize = context.getChildSize(i)!.width;
+      final dx = (childSize + 15) * i;
+      final x = xStart; // to make flow y direction substract [-dx]
+      final y = yStart -
+          dx *
+              controller
+                  .value; // to make flow x direction substract [-dx] , which is already done
+      context.paintChild(i, transform: Matrix4.translationValues(x, y, 0));
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomFlowDelegate oldDelegate) {
+    return controller != oldDelegate.controller;
+  }
+}
