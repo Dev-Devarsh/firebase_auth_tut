@@ -11,17 +11,18 @@ double butonSize = 90;
 
 class _FlowWidgetTutState extends State<FlowWidgetTut>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+  late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 200));
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
