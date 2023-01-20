@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class FlowWidgetTut extends StatefulWidget {
@@ -36,7 +37,10 @@ class _FlowWidgetTutState extends State<FlowWidgetTut>
           bottom: true,
           left: false,
           right: false,
-          child: Flow()),
+          child: Flow(
+            delegate: CustomFlowDelegate(controller: _animationController),
+          
+          )),
     );
   }
 }
