@@ -39,7 +39,25 @@ class _FlowWidgetTutState extends State<FlowWidgetTut>
           right: false,
           child: Flow(
             delegate: CustomFlowDelegate(controller: _animationController),
-          
+            children: [
+              FloatingActionButton(
+                  onPressed: () {
+                    log('_anima ${_animationController.status}');
+                    if (_animationController.status ==
+                        AnimationStatus.dismissed) {
+                      _animationController.forward();
+                    } else {
+                      _animationController.reverse();
+                    }
+                    setState(() {});
+                  },
+                  child: Icon(Icons.add)),
+              FloatingActionButton(onPressed: () {}, child: Icon(Icons.abc)),
+              FloatingActionButton(
+                  onPressed: () {}, child: Icon(Icons.ac_unit)),
+              FloatingActionButton(
+                  onPressed: () {}, child: Icon(Icons.access_alarm_outlined)),
+            ],
           )),
     );
   }
