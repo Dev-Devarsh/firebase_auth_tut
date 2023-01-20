@@ -7,6 +7,8 @@ class FlowWidgetTut extends StatefulWidget {
   State<FlowWidgetTut> createState() => _FlowWidgetTutState();
 }
 
+double butonSize = 90;
+
 class _FlowWidgetTutState extends State<FlowWidgetTut>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
