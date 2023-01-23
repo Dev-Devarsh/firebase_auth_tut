@@ -37,30 +37,46 @@ class _FlowWidgetTutState extends State<FlowWidgetTut>
           bottom: true,
           left: false,
           right: false,
-          child: Flow(
-            delegate: CustomFlowDelegate(controller: _animationController),
+          child: Stack(
             children: [
-              FloatingActionButton(
-                  onPressed: () {
-                    log('_anima ${_animationController.status}');
-                    if (_animationController.status ==
-                        AnimationStatus.dismissed) {
-                      _animationController.forward();
-                    } else {
-                      _animationController.reverse();
-                    }
-                    setState(() {});
-                  },
-                  child: Icon(Icons.add)),
-              FloatingActionButton(
-                  onPressed: () {
-                    showEditDailog();
-                  },
-                  child: Icon(Icons.abc)),
-              FloatingActionButton(
-                  onPressed: () {}, child: Icon(Icons.ac_unit)),
-              FloatingActionButton(
-                  onPressed: () {}, child: Icon(Icons.access_alarm_outlined)),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        log('message');
+                      },
+                      child: Text('data'))
+                ],
+              ),
+              Flow(
+                delegate: CustomFlowDelegate(controller: _animationController),
+                children: [
+                  FloatingActionButton(
+                      onPressed: () {
+                        log('_anima ${_animationController.status}');
+                        if (_animationController.status ==
+                            AnimationStatus.dismissed) {
+                          _animationController.forward();
+                        } else {
+                          _animationController.reverse();
+                        }
+                        setState(() {});
+                      },
+                      child: Icon(Icons.add)),
+                  FloatingActionButton(
+                      onPressed: () {
+                        showEditDailog();
+                      },
+                      child: Icon(Icons.abc)),
+                  FloatingActionButton(
+                      onPressed: () {}, child: Icon(Icons.ac_unit)),
+                  FloatingActionButton(
+                      onPressed: () {},
+                      child: Icon(Icons.access_alarm_outlined)),
+                ],
+              ),
             ],
           )),
     );
