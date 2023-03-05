@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "451672196124",
-    "project_id": "flut-fire-tut-565e8",
-    "storage_bucket": "flut-fire-tut-565e8.appspot.com"
+    "project_number": "1027669293172",
+    "project_id": "fir-phoneauth-3516d",
+    "storage_bucket": "fir-phoneauth-3516d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:451672196124:android:f8da9ee1543dbb4dac4bd9",
+        "mobilesdk_app_id": "1:1027669293172:android:390d028b9c048eda353921",
         "android_client_info": {
           "package_name": "com.example.firebase_auth_tut"
         }
       },
       "oauth_client": [
         {
-          "client_id": "451672196124-4d1j0r2hsnr99gca0t31gg0pe99u4plc.apps.googleusercontent.com",
+          "client_id": "1027669293172-itbkam64t16p3ehf98ofqicnks1mfh51.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebase_auth_tut",
+            "certificate_hash": "ac0101aa0fa62edbf7c8e6bc5a3c966ec8503c19"
+          }
+        },
+        {
+          "client_id": "1027669293172-n3gf97h2b1tr117vge6gqh0i332sdr25.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCKXYwQwv6bsgihfBS0ZXpwVTlMLiH8Y7E"
+          "current_key": "AIzaSyCmHhd36Fy_WVJ-eyjyUpBXHE_RTFeat3g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "451672196124-4d1j0r2hsnr99gca0t31gg0pe99u4plc.apps.googleusercontent.com",
+              "client_id": "1027669293172-n3gf97h2b1tr117vge6gqh0i332sdr25.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
