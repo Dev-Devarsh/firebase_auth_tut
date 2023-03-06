@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable
 import 'dart:io';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_tut/verify.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +115,7 @@ class _MyPhoneState extends State<MyPhone> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                       onPressed: () {
                         auth.verifyPhoneNumber(
-                        
+                        autoRetrievedSmsCodeForTesting: '000000',
                           codeAutoRetrievalTimeout: (e) {
                             // showDialog(
                             //     context: context,

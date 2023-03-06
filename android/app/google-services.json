@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "1027669293172-itbkam64t16p3ehf98ofqicnks1mfh51.apps.googleusercontent.com",
+          "client_id": "1027669293172-psqrp04867o51o431mfn70ob1fi52n2l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.firebase_auth_tut",
@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "1027669293172-n3gf97h2b1tr117vge6gqh0i332sdr25.apps.googleusercontent.com",
+          "client_id": "1027669293172-psqrp04867o51o431mfn70ob1fi52n2l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -37,6 +37,13 @@
             {
               "client_id": "1027669293172-n3gf97h2b1tr117vge6gqh0i332sdr25.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1027669293172-gk3a7i8mp6tu8ivvi27gdrlf8dflglkn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebaseAuthTut"
+              }
             }
           ]
         }
