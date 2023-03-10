@@ -1,8 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
-import 'dart:math';
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth_tut/cloud_fireStore/garage_details.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +29,12 @@ class _SubmitFormState extends State<SubmitForm> {
   final nameController = TextEditingController();
   final ageController = TextEditingController();
   final birthdateController = TextEditingController();
+  final dbInstance = FirebaseFirestore.instance;
+  @override
+  void initState() {
+    // dbInstance = FirebaseFirestore.instance;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,53 +47,19 @@ class _SubmitFormState extends State<SubmitForm> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: nameController,
-                // keyboardType: TextInputType.,
-                decoration: const InputDecoration(
-                    floatingLabelAlignment: FloatingLabelAlignment.center,
-                    labelText: 'Name',
-                    border:
-                        OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(25.0)))),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: ageController,
-                // keyboardType: TextInputType.,
-                decoration: const InputDecoration(
-                    floatingLabelAlignment: FloatingLabelAlignment.center,
-                    labelText: 'age',
-                    border:
-                        OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(25.0)))),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: birthdateController,
-                // keyboardType: TextInputType.,
-                decoration: const InputDecoration(
-                    floatingLabelAlignment: FloatingLabelAlignment.center,
-                    labelText: 'birth',
-                    border:
-                        OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(25.0)))),
-              ),
-            ),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade600),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green.shade600),
                 onPressed: () async {
                   await createUser(
                       name: nameController.text.trim(),
-                      age: int.parse(ageController.text.trim()),
+                      age: 2,
                       birth: ageController.text.trim());
                 },
                 child: Text('Submit')),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade600),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green.shade600),
                 onPressed: () async {
                   updateData(
                       age: int.parse(ageController.text.trim()),
@@ -93,7 +68,8 @@ class _SubmitFormState extends State<SubmitForm> {
                 },
                 child: Text('Update Data')),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade600),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green.shade600),
                 onPressed: () async {
                   await deleteData();
                 },
@@ -103,12 +79,23 @@ class _SubmitFormState extends State<SubmitForm> {
                 builder: (context, snapshoot) {
                   if (snapshoot.hasData) {
                     final users = snapshoot.data!;
-                    return Column(
-                      children: [
-                        Text('age ${snapshoot.data!.map((e) => e.age)}'),
-                        Text('name ${snapshoot.data!.map((e) => e.name ?? 'deleted field')}'),
-                        Text('bithdate ${snapshoot.data!.map((e) => e.birthdate.toString())}'),
-                      ],
+                    return ListView.builder(
+                      itemCount: users.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            Text('lat ${users[index].coordinates.lat}'),
+                            Text('long ${users[index].coordinates.long}'),
+                            Text('data ${users[index].firstName}'),
+                            Text('data ${users[index].garageAddress}'),
+                            Text('data ${users[index].garageName}'),
+                            Text('data ${users[index].garageSubtitle}'),
+                            Text('data ${users[index].lastName}'),
+                            Text('data ${users[index].phoenNumber}'),
+                            Text('data ${users[index].rating}'),
+                          ],
+                        );
+                      },
                     );
                   } else {
                     return CircularProgressIndicator();
@@ -120,42 +107,46 @@ class _SubmitFormState extends State<SubmitForm> {
     );
   }
 
-  Future<void> createUser({required String name, required int age, required String birth}) async {
+  Future<void> createUser(
+      {required String name, required int age, required String birth}) async {
     // if you remove id from [doc] then firebase will generate id automatically
-    final docUser = FirebaseFirestore.instance.collection('dev').doc('fsf');
     // insted of json you can make model class with to json method
-    final json = {'name': name, 'age': age, 'birth': birth};
-    final user = UserData(age: 21, birthdate: '23-3-2002', name: name);
-    final json2 = user.toJson();
-
-    // await docUser.set(json);
-    await docUser.set(json2);
-
-    // if you remove [doc] method and use [add] method then firebase will generate id automatically
-    // final docUser = FirebaseFirestore.instance.collection('dev');
-    //insted of json you can make model class with to json method
-    // final json = {'name': name, 'age': age, 'birth': birth};
-    // final user = UserData(age: 21, birthdate: '23-3-2002', name: name);
-    // final json2 = user.toJson();
-
-    // await docUser.add(json2);
+    final user = GarageDetailsData(
+        uid: '123310',
+        coordinates: Coordinates(lat: 200.541534, long: 2515.0510),
+        firstName: 'John',
+        garageAddress: 'address 1',
+        garageName: 'abcd',
+        garageSubtitle: 'subtitle 1',
+        lastName: 'Doe',
+        phoenNumber: '21581384',
+        rating: 4);
+    final userData = GarageDetails(garageDetails: user);
+    final json2 = userData.toJson();
+   await dbInstance.collection('garege').doc('xTIKXdggaRta7UhUGYZc').set(json2);
   }
 }
 
 updateData({required String name, required int age, required String birth}) {
-  final updateData = FirebaseFirestore.instance.collection('dev').doc('fsf');
-  final user = UserData(age: age, birthdate: birth, name: name);
-  final jsonData = user.toJson();
-  updateData.update(jsonData);
+  // final updateData = FirebaseFirestore.instance
+  //     .collection('xTIKXdggaRta7UhUGYZc')
+  //     .doc('garage_list');
+  // final user = GarageItem(age: age, birthdate: birth, name: name);
+  // final jsonData = user.toJson();
+  // updateData.update(jsonData);
 }
 
-Stream<List<UserData>> readData() => FirebaseFirestore.instance
-    .collection('dev')
+Stream<List<GarageDetailsData>> readData() => FirebaseFirestore.instance
+    .collection('garege')
     .snapshots()
-    .map((snapShoot) => snapShoot.docs.map((doc) => UserData.fromJson(doc.data())).toList());
+    .map((snapShoot) => snapShoot.docs
+        .map((doc) => GarageDetailsData.fromJson(doc.data()))
+        .toList());
 
 deleteData() {
-  final updateData = FirebaseFirestore.instance.collection('dev').doc('fsf');
+  final updateData = FirebaseFirestore.instance
+      .collection('xTIKXdggaRta7UhUGYZc')
+      .doc('garage_list');
   //To access nested valued user [.] oprator in key of that like
   /* 
             name : {
@@ -173,19 +164,4 @@ deleteData() {
 
   */
   updateData.update({'name': FieldValue.delete()});
-}
-
-class UserData {
-  int age;
-  String? name;
-  String birthdate;
-  UserData({
-    required this.age,
-    required this.name,
-    required this.birthdate,
-  });
-  toJson() => {'age': this.age, 'name': this.name, 'birthdate': this.birthdate};
-
-  static UserData fromJson(Map<String, dynamic> json) =>
-      UserData(age: json['age'], name: json['name'] ?? null, birthdate: json['birthdate']);
 }
