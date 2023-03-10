@@ -10,7 +10,7 @@ import 'Amination_tut/staggered_animation.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(StaggeredAnimation());
+  runApp(CreateProfile());
 }
 
 class MyApp extends StatelessWidget {
