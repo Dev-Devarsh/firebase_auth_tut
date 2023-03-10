@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // To parse this JSON data, do
 //
 //     final garageDetails = garageDetailsFromJson(jsonString);
@@ -13,7 +14,7 @@ class GarageDetails {
         required this.garageDetails,
     });
 
-    final GarageDetailsData garageDetails;
+     GarageDetailsData garageDetails;
 
     factory GarageDetails.fromJson(Map<String, dynamic> json) => GarageDetails(
         garageDetails: GarageDetailsData.fromJson(json["garageDetails"]),
@@ -22,6 +23,14 @@ class GarageDetails {
     Map<String, dynamic> toJson() => {
         "garageDetails": garageDetails.toJson(),
     };
+
+  GarageDetails copyWith({
+    GarageDetailsData? garageDetails,
+  }) {
+    return GarageDetails(
+      garageDetails: garageDetails ?? this.garageDetails,
+    );
+  }
 }
 
 class GarageDetailsData {
@@ -37,15 +46,15 @@ class GarageDetailsData {
         required this.rating,
     });
 
-    final String uid;
-    final Coordinates coordinates;
-    final String firstName;
-    final String garageAddress;
-    final String garageName;
-    final String garageSubtitle;
-    final String lastName;
-    final String phoenNumber;
-    final int rating;
+     String uid;
+     Coordinates coordinates;
+     String firstName;
+     String garageAddress;
+     String garageName;
+     String garageSubtitle;
+     String lastName;
+     String phoenNumber;
+     int rating;
 
     factory GarageDetailsData.fromJson(Map<String, dynamic> json) => GarageDetailsData(
         uid: json["uid"],
@@ -70,6 +79,30 @@ class GarageDetailsData {
         "phoen_number": phoenNumber,
         "rating": rating,
     };
+
+  GarageDetailsData copyWith({
+    String? uid,
+    Coordinates? coordinates,
+    String? firstName,
+    String? garageAddress,
+    String? garageName,
+    String? garageSubtitle,
+    String? lastName,
+    String? phoenNumber,
+    int? rating,
+  }) {
+    return GarageDetailsData(
+      uid: uid ?? this.uid,
+      coordinates: coordinates ?? this.coordinates,
+      firstName: firstName ?? this.firstName,
+      garageAddress: garageAddress ?? this.garageAddress,
+      garageName: garageName ?? this.garageName,
+      garageSubtitle: garageSubtitle ?? this.garageSubtitle,
+      lastName: lastName ?? this.lastName,
+      phoenNumber: phoenNumber ?? this.phoenNumber,
+      rating: rating ?? this.rating,
+    );
+  }
 }
 
 class Coordinates {
@@ -78,8 +111,8 @@ class Coordinates {
         required this.long,
     });
 
-    final double lat;
-    final double long;
+     double lat;
+     double long;
 
     factory Coordinates.fromJson(Map<String, dynamic> json) => Coordinates(
         lat: json["lat"]?.toDouble(),

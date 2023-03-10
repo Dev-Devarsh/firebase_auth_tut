@@ -1,12 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth_tut/cloud_fireStore/garage_details.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class CreateProfile extends StatelessWidget {
@@ -44,124 +40,122 @@ class _SubmitFormState extends State<SubmitForm> {
         backgroundColor: Colors.green.shade600,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade600),
-                onPressed: () async {
-                  await createUser(
-                      name: nameController.text.trim(),
-                      age: 2,
-                      birth: ageController.text.trim());
-                },
-                child: Text('Submit')),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade600),
-                onPressed: () async {
-                  updateData(
-                      age: int.parse(ageController.text.trim()),
-                      birth: ageController.text.trim(),
-                      name: nameController.text.trim());
-                },
-                child: Text('Update Data')),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade600),
-                onPressed: () async {
-                  await deleteData();
-                },
-                child: Text('Delete Data')),
-            StreamBuilder(
-                stream: readData(),
-                builder: (context, snapshoot) {
-                  if (snapshoot.hasData) {
-                    final users = snapshoot.data!;
-                    return ListView.builder(
-                      itemCount: users.length,
-                      itemBuilder: (context, index) {
-                        return Column(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              StreamBuilder(
+                  stream: readData(),
+                  builder: (context, snapshoot) {
+                    if (snapshoot.hasData) {
+                      final users = snapshoot.data!;
+                      return Column(
+                          children: List.generate(users.length, (index) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('lat ${users[index].coordinates.lat}'),
-                            Text('long ${users[index].coordinates.long}'),
-                            Text('data ${users[index].firstName}'),
-                            Text('data ${users[index].garageAddress}'),
-                            Text('data ${users[index].garageName}'),
-                            Text('data ${users[index].garageSubtitle}'),
-                            Text('data ${users[index].lastName}'),
-                            Text('data ${users[index].phoenNumber}'),
-                            Text('data ${users[index].rating}'),
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 28.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      'lat   :   ${users[index].garageDetails.coordinates.lat}'),
+                                  Text(
+                                      'long  :   ${users[index].garageDetails.coordinates.long}'),
+                                  Text(
+                                      'firstName   :  ${users[index].garageDetails.firstName}'),
+                                  Text(
+                                      'garageAddress  :   ${users[index].garageDetails.garageAddress}'),
+                                  Text(
+                                      'garageName  :   ${users[index].garageDetails.garageName}'),
+                                  Text(
+                                      'garageSubtitle   :  ${users[index].garageDetails.garageSubtitle}'),
+                                  Text(
+                                      'lastName   :  ${users[index].garageDetails.lastName}'),
+                                  Text(
+                                      'phoenNumber  :   ${users[index].garageDetails.phoenNumber}'),
+                                  Text(
+                                      'rating   :  ${users[index].garageDetails.rating}'),
+                                ],
+                              ),
+                            ),
+                            Column(
+                              children: [
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.green.shade600),
+                                    onPressed: () async {
+                                      updateData(data: users[index]);
+                                    },
+                                    child: Text('Update Data')),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.green.shade600),
+                                    onPressed: () async {
+                                      await deleteData(data: users[index]);
+                                    },
+                                    child: Text('Delete Data')),
+                              ],
+                            )
                           ],
                         );
-                      },
-                    );
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                })
-          ],
+                      }));
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  }),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green.shade600),
+                  onPressed: () async {
+                    await createUser();
+                  },
+                  child: Text('Submit')),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Future<void> createUser(
-      {required String name, required int age, required String birth}) async {
+  Future<void> createUser() async {
     // if you remove id from [doc] then firebase will generate id automatically
     // insted of json you can make model class with to json method
     final user = GarageDetailsData(
-        uid: '123310',
+        uid: '5',
         coordinates: Coordinates(lat: 200.541534, long: 2515.0510),
         firstName: 'John',
         garageAddress: 'address 1',
         garageName: 'abcd',
-        garageSubtitle: 'subtitle 1',
+        garageSubtitle: 'subtitle 222222',
         lastName: 'Doe',
         phoenNumber: '21581384',
         rating: 4);
     final userData = GarageDetails(garageDetails: user);
     final json2 = userData.toJson();
-   await dbInstance.collection('garege').doc('xTIKXdggaRta7UhUGYZc').set(json2);
+    await dbInstance.collection('garege').doc('5').set(json2);
+  }
+
+  updateData({required GarageDetails data}) async {
+    data.garageDetails.firstName = 'asdfghjkl;';
+    await dbInstance
+        .collection('garege')
+        .doc(data.garageDetails.uid)
+        .update(data.toJson());
   }
 }
 
-updateData({required String name, required int age, required String birth}) {
-  // final updateData = FirebaseFirestore.instance
-  //     .collection('xTIKXdggaRta7UhUGYZc')
-  //     .doc('garage_list');
-  // final user = GarageItem(age: age, birthdate: birth, name: name);
-  // final jsonData = user.toJson();
-  // updateData.update(jsonData);
-}
-
-Stream<List<GarageDetailsData>> readData() => FirebaseFirestore.instance
+Stream<List<GarageDetails>> readData() => FirebaseFirestore.instance
     .collection('garege')
     .snapshots()
     .map((snapShoot) => snapShoot.docs
-        .map((doc) => GarageDetailsData.fromJson(doc.data()))
+        .map((doc) => GarageDetails.fromJson(doc.data()))
         .toList());
 
-deleteData() {
+deleteData({required GarageDetails data}) {
   final updateData = FirebaseFirestore.instance
-      .collection('xTIKXdggaRta7UhUGYZc')
-      .doc('garage_list');
-  //To access nested valued user [.] oprator in key of that like
-  /* 
-            name : {
-              firstName: 'abc',
-              lastNmae : 'xyz'
-            },
-            age : 22,
-            birth: 1-1-2001
-            
-            => to delete nested field
-            updateData.update({'name.firstName': FieldValue.delete()});
-
-            => to update nested field
-            updateData.update({'name.firstName': 'pqr'});
-
-  */
-  updateData.update({'name': FieldValue.delete()});
+      .collection('garege')
+      .doc(data.garageDetails.uid)
+      .delete();
 }
