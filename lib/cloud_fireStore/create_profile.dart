@@ -3,6 +3,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth_tut/cloud_fireStore/garage_details.dart';
+import 'package:firebase_auth_tut/cloud_fireStore/parts_screen/parts_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class CreateProfile extends StatelessWidget {
@@ -26,11 +27,6 @@ class _SubmitFormState extends State<SubmitForm> {
   final ageController = TextEditingController();
   final birthdateController = TextEditingController();
   final dbInstance = FirebaseFirestore.instance;
-  @override
-  void initState() {
-    // dbInstance = FirebaseFirestore.instance;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +34,17 @@ class _SubmitFormState extends State<SubmitForm> {
       appBar: AppBar(
         title: const Text('Add Data'),
         backgroundColor: Colors.green.shade600,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PartsScreen(fireStoreInstance: dbInstance),
+                    ));
+              },
+              icon: Icon(Icons.settings))
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(
