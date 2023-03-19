@@ -6,14 +6,14 @@ import 'package:firebase_auth_tut/cloud_fireStore/garage_details.dart';
 import 'package:firebase_auth_tut/cloud_fireStore/parts_screen/parts_details_screen.dart';
 import 'package:flutter/material.dart';
 
-class CreateProfile extends StatelessWidget {
-  const CreateProfile({super.key});
+// class CreateProfile extends StatelessWidget {
+//   const CreateProfile({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(home: SubmitForm());
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(home: SubmitForm());
+//   }
+// }
 
 class SubmitForm extends StatefulWidget {
   const SubmitForm({super.key});
